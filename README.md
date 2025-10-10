@@ -1,6 +1,7 @@
 # Jenkins MCP Server
 
-A Model Context Protocol (MCP) server for fetching and analyzing Jenkins build console logs.
+A Model Context Protocol (MCP) server for fetching and analyzing Jenkins build console logs. Supports multiple Jenkins instances (named configurations) and automatic instance detection from job URLs.
+
 
 ## Features
 
