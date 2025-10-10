@@ -30,11 +30,39 @@ cp .env.example .env
 ```
 
 2. Configure your Jenkins credentials:
+
+### Single Jenkins Instance
+For a single Jenkins server:
 ```env
 JENKINS_URL=https://your-jenkins-instance.com
 JENKINS_USER=your_username
 JENKINS_API_TOKEN=your_api_token
 ```
+
+### Multiple Jenkins Instances
+If you have multiple Jenkins servers (e.g., legacy and current), you can configure them using named instances:
+
+```env
+# Default instance (backward compatible)
+JENKINS_URL=https://jenkins.example.com
+JENKINS_USER=default_user
+JENKINS_API_TOKEN=default_token
+
+# Legacy Jenkins
+JENKINS_LEGACY_URL=https://jenkins-legacy.example.com
+JENKINS_LEGACY_USER=legacy_user
+JENKINS_LEGACY_API_TOKEN=legacy_token
+
+# Current/Production Jenkins
+JENKINS_CURRENT_URL=https://jenkins.production.example.com
+JENKINS_CURRENT_USER=current_user
+JENKINS_CURRENT_API_TOKEN=current_token
+```
+
+When using multiple instances, provide the **full Jenkins job URL** and the server will automatically use the correct instance:
+- Example: `"https://jenkins-legacy.example.com/job/MyFolder/job/MyJob/lastBuild"`
+
+The server matches the URL against configured instances and uses the appropriate credentials.
 
 ### Getting a Jenkins API Token
 
@@ -62,18 +90,29 @@ The server will start on `http://0.0.0.0:3000/mcp` (configurable via `SERVER_POR
 
 ### Available Tools
 
+All tools require a **full Jenkins job URL** including the build number or alias.
+
+**URL Format:**
+```
+https://jenkins.example.com/job/JobName/job/SubJob/lastBuild
+```
+
+**Build Aliases:**
+- `lastBuild` - Most recent build
+- `lastSuccessfulBuild` - Most recent successful build
+- `lastFailedBuild` - Most recent failed build
+- `lastCompletedBuild` - Most recent completed build
+
 #### 1. `get_jenkins_console_log`
 Fetch the complete console log for a Jenkins build.
 
 **Parameters:**
-- `job_name` (required): The Jenkins job name (e.g., "MyProject/job/my-application")
-- `build_number` (optional): Build number or alias like "lastBuild", "lastFailedBuild" (default: "lastBuild")
+- `job_url` (required): Full Jenkins job URL
 
 **Example:**
 ```python
 get_jenkins_console_log(
-    job_name="MyProject/job/my-application",
-    build_number="123"
+    job_url="https://jenkins.example.com/job/MyProject/job/my-application/123"
 )
 ```
 
@@ -81,16 +120,12 @@ get_jenkins_console_log(
 Analyze a build log and extract error snippets. For large logs, it automatically extracts relevant error sections with surrounding context.
 
 **Parameters:**
-- `job_name` (required): The Jenkins job name
-- `build_number` (optional): Build number or alias (default: "lastBuild")
-- `context_lines` (optional): Number of lines to include before/after errors (default: 15)
+- `job_url` (required): Full Jenkins job URL
 
 **Example:**
 ```python
 analyze_jenkins_build_errors(
-    job_name="MyProject/job/my-application",
-    build_number="lastFailedBuild",
-    context_lines=20
+    job_url="https://jenkins.example.com/job/MyProject/job/my-application/lastFailedBuild"
 )
 ```
 
@@ -98,14 +133,12 @@ analyze_jenkins_build_errors(
 Extract git repository information from a build's console log. Returns deduplicated list of repositories with URLs, branches, and commit hashes.
 
 **Parameters:**
-- `job_name` (required): The Jenkins job name
-- `build_number` (optional): Build number or alias (default: "lastBuild")
+- `job_url` (required): Full Jenkins job URL
 
 **Example:**
 ```python
 get_jenkins_git_repositories(
-    job_name="MyProject/job/my-application",
-    build_number="lastBuild"
+    job_url="https://jenkins.example.com/job/MyProject/job/my-application/lastBuild"
 )
 ```
 
@@ -113,14 +146,12 @@ get_jenkins_git_repositories(
 Get metadata about a Jenkins build (status, duration, timestamp, etc.).
 
 **Parameters:**
-- `job_name` (required): The Jenkins job name
-- `build_number` (optional): Build number or alias (default: "lastBuild")
+- `job_url` (required): Full Jenkins job URL
 
 **Example:**
 ```python
 get_jenkins_build_info(
-    job_name="MyProject/job/my-application",
-    build_number="123"
+    job_url="https://jenkins.example.com/job/MyProject/job/my-application/123"
 )
 ```
 
@@ -140,6 +171,24 @@ You can customize the behavior using environment variables:
 - `HTTP_WRITE_TIMEOUT`: HTTP write timeout in seconds (default: 10)
 - `SERVER_PORT`: Port the MCP server listens on (default: 3000)
 - `SERVER_PATH`: Path for the MCP endpoint (default: /mcp)
+- `DEBUG`: Enable verbose debug logging (default: `false`). Set to `true` to see detailed logs including instance detection, API calls, and response sizes
+
+### Debug Mode
+
+Enable verbose logging to see detailed information about instance detection, API calls, and responses:
+
+```env
+DEBUG=true
+```
+
+When enabled, you'll see output like:
+```
+🔧 Configuration loaded (DEBUG MODE ENABLED):
+   Jenkins instances configured: 2
+     - https://jenkins.example.com (user: your_user)
+     - https://jenkins-legacy.example.com (user: legacy_user)
+   ...
+```
 
 ### SSL Certificate Issues
 
