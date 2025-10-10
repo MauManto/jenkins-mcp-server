@@ -6,6 +6,7 @@ A Model Context Protocol (MCP) server for fetching and analyzing Jenkins build c
 
 - **Get Console Logs**: Fetch complete console output from Jenkins builds
 - **Analyze Build Errors**: Extract error snippets with context from large logs
+- **Extract Git Repositories**: Identify git repositories, branches, and commits used in builds
 - **Get Build Information**: Retrieve build metadata (status, duration, triggers, etc.)
 
 ## Installation
@@ -49,7 +50,7 @@ JENKINS_API_TOKEN=your_api_token
 ### Running the Server
 
 ```bash
-uv run jenkins-mcp
+uv run jenkins-mcp-server
 ```
 
 Or run the Python file directly:
@@ -93,7 +94,22 @@ analyze_jenkins_build_errors(
 )
 ```
 
-#### 3. `get_jenkins_build_info`
+#### 3. `get_jenkins_git_repositories`
+Extract git repository information from a build's console log. Returns deduplicated list of repositories with URLs, branches, and commit hashes.
+
+**Parameters:**
+- `job_name` (required): The Jenkins job name
+- `build_number` (optional): Build number or alias (default: "lastBuild")
+
+**Example:**
+```python
+get_jenkins_git_repositories(
+    job_name="MyProject/job/my-application",
+    build_number="lastBuild"
+)
+```
+
+#### 4. `get_jenkins_build_info`
 Get metadata about a Jenkins build (status, duration, timestamp, etc.).
 
 **Parameters:**
@@ -117,7 +133,7 @@ You can customize the behavior using environment variables:
 - `JENKINS_API_TOKEN`: Your Jenkins API token
 - `JENKINS_VERIFY_SSL`: Enable/disable SSL certificate verification (default: `true`). Set to `false` for self-signed certificates
 - `MAX_LOG_SIZE`: Maximum log size (in characters) before extracting snippets (default: 250000)
-- `CONTEXT_WINDOW`: Number of lines to include around errors (default: 15)
+- `CONTEXT_WINDOW`: Number of lines to include around errors (default: 2)
 - `HTTP_TIMEOUT`: Overall HTTP request timeout in seconds (default: 30)
 - `HTTP_CONNECT_TIMEOUT`: HTTP connection timeout in seconds (default: 10)
 - `HTTP_READ_TIMEOUT`: HTTP read timeout in seconds (default: 120)
