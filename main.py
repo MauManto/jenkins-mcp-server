@@ -15,7 +15,7 @@ JENKINS_USER = os.getenv("JENKINS_USER")
 JENKINS_API_TOKEN = os.getenv("JENKINS_API_TOKEN")
 JENKINS_VERIFY_SSL = os.getenv("JENKINS_VERIFY_SSL", "true").lower() in ("true", "1", "yes")
 MAX_LOG_SIZE = int(os.getenv("MAX_LOG_SIZE", "250000"))
-CONTEXT_WINDOW = int(os.getenv("CONTEXT_WINDOW", "15"))
+CONTEXT_WINDOW = int(os.getenv("CONTEXT_WINDOW", "2"))
 HTTP_TIMEOUT = float(os.getenv("HTTP_TIMEOUT", "30"))
 HTTP_CONNECT_TIMEOUT = float(os.getenv("HTTP_CONNECT_TIMEOUT", "10"))
 HTTP_READ_TIMEOUT = float(os.getenv("HTTP_READ_TIMEOUT", "120"))
@@ -63,7 +63,7 @@ def get_jenkins_credentials() -> tuple[str, str] | None:
     return (JENKINS_USER, JENKINS_API_TOKEN)
 
 
-def analyze_log_for_errors(console_log: str, context_window: int = 15) -> list[str]:
+def analyze_log_for_errors(console_log: str, context_window: int = 2) -> list[str]:
     """
     Analyze console log and extract error snippets with context.
 

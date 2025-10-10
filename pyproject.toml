@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-jenkins-mcp = "main:main"
+jenkins-mcp-server = "main:main"
 
 [build-system]
 requires = ["hatchling"]
